@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FeastFlow</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .navbar-brand h3 {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg" style="padding-top: 0%;">
+  <div class="container-fluid" style="background-color: black; padding-top: 5px; padding-bottom: 5px;">
+   
+    <a class="navbar-brand" href="{% url 'home' %}"><h3 style="color: beige"><strong><i class="fa-solid fa-house" style="color:white;"></i> Feast</strong></h3></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% if request.user.is_staff %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" style="color: beige;" href="{% url 'itemreg' %}">
+            <strong>Register Item</strong></a>
+        </li>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+        <div style="background-color: gray; border: 10px; border-radius: 10px">
+          <h6 align="center" style="padding-top: 10px; padding-left: 10px; padding-right: 10px; color: aquamarine">Hello {{ request.user.username }}</h6>
+        </div>
+        <li>
+          <a href="{% url 'showcart' %}" style="padding-left: 10px; padding-top: 10px">
+            <button class="btn btn-outline-light" type="submit"><i class="fa-solid fa-cart-shopping"></i></button>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'logout' %}" style="padding-left: 10px; padding-top: 10px">
+            <button class="btn btn-outline-light" type="submit">Logout</button>
+          </a>
+        </li>
+
+        {% else %}
+        <li>
+          <a href="{% url 'userlogin' %}" style="padding-right: 10px; padding-top: 10px">
+            <button class="btn btn-outline-light" type="submit">Login</button>
+          </a>
+        </li>
+
+        <li>
+          <a href="{% url 'userreg' %}" style="padding-right: 10px; padding-top: 10px">
+            <button class="btn btn-outline-light" type="submit">Register</button>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+      <form class="d-flex" method="POST" action="{% url 'home' %}">
+        {% csrf_token %}
+        <input class="form-control me-2" name="ser" type="search"Search" aria-label="Search">
+        <button class="btn btn-outline-light" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
